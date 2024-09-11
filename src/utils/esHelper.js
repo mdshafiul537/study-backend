@@ -6,7 +6,7 @@ const isNumber = require("is-number");
  * @returns {Boolean} true & false
  * @description this value is Empty Check
  */
-const esIsEmpty = (value: string | number | object): boolean => {
+const esIsEmpty = (value) => {
   if (value === null) {
     return true;
   } else if (typeof value !== "number" && value === "") {
@@ -24,7 +24,7 @@ const esIsEmpty = (value: string | number | object): boolean => {
   }
 };
 
-const esGetNumber = (value: string | number | object | any): number => {
+const esGetNumber = (value) => {
   let num = 0;
   if (!esIsEmpty(value)) {
     num = Number(value);

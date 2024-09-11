@@ -1,5 +1,6 @@
 const express = require("express");
-const  routers  = require("./router");
+const cors = require("cors");
+const routers = require("./router");
 class App {
   app = undefined;
   port = process.env.PORT | 3051;
@@ -7,10 +8,19 @@ class App {
     this.app = express();
 
     this.initRouter();
+
+    this.initMiddleware();
   }
 
   initRouter = () => {
     routers(this.app);
+  };
+
+  initMiddleware = () => {
+    this.app.use(cors);
+
+    this.app.use(express.urlencoded({ extended: false }));
+    this.app.use(express.json({ limit: "20mb" }));
   };
 
   run = () => {

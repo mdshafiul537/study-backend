@@ -1,8 +1,14 @@
 const express = require("express");
-const userRouter = require( "./user.router" );
+const userRouter = require("./user.router");
+const assignmentRouter = require("./assignment.router");
+const submissionRouter = require("./submission.router");
+const quoteRouter = require( "./quote.router" );
 
 function routers(app) {
   app.use("/api/users", userRouter);
+  app.use("/api/assignments", assignmentRouter);
+  app.use("/api/submissions", submissionRouter);
+  app.use("/api/quotes", quoteRouter);
 
   app.use("/", (req, resp) => {
     resp.send("ok");

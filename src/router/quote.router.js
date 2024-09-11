@@ -7,6 +7,6 @@ quoteRouter.get("/", quoteController.getAll);
 quoteRouter.get("/:id", quoteController.getOne);
 quoteRouter.post("/", quoteController.add);
 quoteRouter.put("/", quoteController.updateOne);
-quoteRouter.deleteOne("/:id", quoteController.deleteOne);
+quoteRouter.delete("/:id", quoteController.deleteOne);
 
-module.exports = userRouter;
+module.exports = quoteRouter;
