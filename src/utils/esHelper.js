@@ -1,7 +1,7 @@
 const isNumber = require("is-number");
 
 /**
- * @method isEmpty
+ * @method isEmpty  function
  * @param {String | Number | Object} value
  * @returns {Boolean} true & false
  * @description this value is Empty Check

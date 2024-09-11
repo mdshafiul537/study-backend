@@ -69,7 +69,20 @@ class AssignmentServices {
     }
   };
 
-  deleteOne = async () => {};
+  deleteOne = async (id, user) => {
+    let resp = null;
+    try {
+      const database = dbConnectionClient.db("study_db");
+      const studyDb = database.collection("assignment");
+
+      const query = { $and: { _id: new ObjectId(id), userEmail: user } };
+      resp = await studyDb.deleteOne(query);
+    } catch (error) {
+      console.log("Quote Delete Error ", error);
+    } finally {
+      return resp;
+    }
+  };
 }
 
 const assignmentServices = new AssignmentServices();

@@ -69,7 +69,20 @@ class SubmissionServices {
     }
   };
 
-  deleteOne = async () => {};
+  deleteOne = async (id) => {
+    let resp = null;
+    try {
+      const database = dbConnectionClient.db("study_db");
+      const studyDb = database.collection("submission");
+
+      const query = { _id: new ObjectId(id) };
+      resp = await studyDb.deleteOne(query);
+    } catch (error) {
+      console.log("Quote Delete Error ", error);
+    } finally {
+      return resp;
+    }
+  };
 }
 
 const submissionServices = new SubmissionServices();
