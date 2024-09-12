@@ -1,7 +1,9 @@
+const assignmentServices = require("../services/assignment.services");
+const { esIsEmpty } = require("../utils/esHelper");
 const respFormat = require("../utils/response/respFormat");
 
 class AssignmentController {
-  getAll = async(req, resp) =>{
+  getAll = async (req, resp) => {
     try {
       const assignments = await assignmentServices.getAll();
       resp.status(200);
@@ -23,15 +25,19 @@ class AssignmentController {
 
       resp.send(respFormat(null, ` assignments not found`, true));
     }
-  }
+  };
 
-   getOne = async (req, resp)=> {
+  getOne = async (req, resp) => {
+    console.log("assignment Get One ...");
+
     const assignment = await assignmentServices.getOne(req?.params?.id);
     try {
       resp.status(200);
 
       if (!esIsEmpty(assignment)) {
-        resp.send(respFormat(assignment, "assignment not found", true));
+        resp.send(respFormat(assignment, "assignment found by ID", true));
+      } else {
+        resp.send(respFormat(assignment, "assignment not found", false));
       }
     } catch (error) {
       console.log("Get assignments, Error ", error);
@@ -39,21 +45,25 @@ class AssignmentController {
 
       resp.send(respFormat(null, "assignments not found", false));
     }
-  }
+  };
 
-  add = async (assignment) => {
+  add = async (req, resp) => {
     try {
       const assignment = await assignmentServices.addOne(req.body);
       resp.status(200);
-
+      console.log("CN Adding assignment Resp, ", assignment);
       if (!esIsEmpty(assignment)) {
-        resp.send(respFormat(assignment, "assignment Update  failed", true));
+        resp.send(
+          respFormat(assignment, "Assignment added  successfully", true)
+        );
+      } else {
+        resp.send(respFormat(assignment, "Assignment Add  failed", false));
       }
     } catch (error) {
-      resp.send(respFormat(null, "assignments Update failed", false));
+      resp.send(respFormat(null, "Assignments Add failed", false));
     }
   };
-  updateOne = async (req, resp)=> {
+  updateOne = async (req, resp) => {
     try {
       const assignment = await assignmentServices.updateOne(req.body);
       resp.status(200);
@@ -64,9 +74,9 @@ class AssignmentController {
     } catch (error) {
       resp.send(respFormat(null, "assignments Update failed", false));
     }
-  }
+  };
 
-   deleteOne = async(req, resp)=> {
+  deleteOne = async (req, resp) => {
     try {
       const deleteResp = await assignmentServices.deleteOne(req?.params?.id);
       resp.status(200);
@@ -79,7 +89,7 @@ class AssignmentController {
     } catch (error) {
       resp.send(respFormat(null, "assignment  Delete/Remove failed", false));
     }
-  }
+  };
 }
 
 const assignmentController = new AssignmentController();

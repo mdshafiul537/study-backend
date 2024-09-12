@@ -1,3 +1,4 @@
+const { ObjectId } = require("mongodb");
 const { dbClient } = require("../database/dbClient");
 
 class SubmissionServices {
@@ -22,11 +23,9 @@ class SubmissionServices {
       const database = dbClient.db("study_db");
       const collection = database.collection("submission");
 
-      const options = {
-        projection: { _id: id },
-      };
+      const filter = { _id: new ObjectId(id) };
 
-      const respSubmission = await collection.findOne({}, options);
+      respSubmission = await collection.findOne(filter);
     } catch (error) {
       // console.log("submission By ID Error, ", error);
     } finally {

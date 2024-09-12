@@ -2,26 +2,45 @@ const isNumber = require("is-number");
 
 /**
  * @method isEmpty  function
- * @param {String | Number | Object} value
+ * @param {String | Number | Object} obj
  * @returns {Boolean} true & false
  * @description this value is Empty Check
  */
-const esIsEmpty = (value) => {
-  if (value === null) {
+const esIsEmpty = (obj) => {
+  if ((obj === undefined && obj === null) || obj === `null`) {
     return true;
-  } else if (typeof value !== "number" && value === "") {
+  }
+
+  if (typeof obj === "undefined" || obj == `null`) {
     return true;
-  } else if (typeof value === "undefined" || value === undefined) {
-    return true;
-  } else if (
-    value !== null &&
-    typeof value === "object" &&
-    !Object.keys(value).length
+  }
+
+  if (
+    obj === null ||
+    obj === undefined ||
+    typeof obj === "undefined" ||
+    obj === "" ||
+    obj == `null`
   ) {
     return true;
-  } else {
+  }
+
+  if (Object.keys(obj).length === 0 && obj.constructor === Object) {
+    return true;
+  }
+
+  if (Array.isArray(obj)) {
+    if (obj.length > 0) {
+      return false;
+    }
+
+    return true;
+  }
+
+  if (obj) {
     return false;
   }
+  return true;
 };
 
 const esGetNumber = (value) => {

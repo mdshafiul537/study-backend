@@ -1,3 +1,4 @@
+const { ObjectId } = require("mongodb");
 const { dbClient } = require("../database/dbClient");
 
 class UserServices {
@@ -22,11 +23,9 @@ class UserServices {
       const database = dbClient.db("art_craft");
       const collection = database.collection("user");
 
-      const options = {
-        projection: { _id: id },
-      };
+      const filter = { _id: new ObjectId(uSubmission.id) };
 
-      const respUser = await collection.findOne({}, options);
+      respUser = await collection.findOne(filter);
     } catch (error) {
       // console.log("User By ID Error, ", error);
     } finally {

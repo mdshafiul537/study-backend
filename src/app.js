@@ -6,10 +6,8 @@ class App {
   port = process.env.PORT | 3051;
   constructor() {
     this.app = express();
-
-    this.initRouter();
-
     this.initMiddleware();
+    this.initRouter();
   }
 
   initRouter = () => {
@@ -17,7 +15,7 @@ class App {
   };
 
   initMiddleware = () => {
-    this.app.use(cors);
+    this.app.use(cors());
 
     this.app.use(express.urlencoded({ extended: false }));
     this.app.use(express.json({ limit: "20mb" }));

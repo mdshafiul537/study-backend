@@ -1,3 +1,4 @@
+const { ObjectId } = require("mongodb");
 const { dbClient } = require("../database/dbClient");
 
 class AssignmentServices {
@@ -15,20 +16,18 @@ class AssignmentServices {
   };
 
   getOne = async (id) => {
-    // console.log("assignment Finding using id ", id);
+    console.log("assignment Finding using id ", id);
     let respAssignment = null;
     try {
       // Get the database and collection on which to run the operation
       const database = dbClient.db("study_db");
       const collection = database.collection("assignment");
 
-      const options = {
-        projection: { _id: id },
-      };
+      const filter = { _id: new ObjectId(id) };
 
-      const respAssignment = await collection.findOne({}, options);
+      respAssignment = await collection.findOne(filter);
     } catch (error) {
-      // console.log("assignment By ID Error, ", error);
+      console.log("assignment By ID Error, ", error);
     } finally {
       return respAssignment;
     }
@@ -43,7 +42,7 @@ class AssignmentServices {
       assignment.create = new Date();
       assignmentResult = await collection.insertOne(assignment);
     } catch (error) {
-      // console.log("assignment AddOne Error, ", error);
+      console.log("assignment AddOne Error, ", error);
     } finally {
       return assignmentResult;
     }

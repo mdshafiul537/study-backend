@@ -1,3 +1,4 @@
+const { ObjectId } = require("mongodb");
 const { dbClient } = require("../database/dbClient");
 
 class QuoteServices {
@@ -8,6 +9,7 @@ class QuoteServices {
       const collection = database.collection("quote");
 
       const cursor = collection.find();
+
       quotesResp = await cursor.toArray();
     } catch (error) {
       console.log("Get All quote Error ", error);
@@ -24,11 +26,8 @@ class QuoteServices {
       const database = dbClient.db("art_craft");
       const collection = database.collection("quote");
 
-      const options = {
-        projection: { _id: id },
-      };
-
-      const respQuote = await collection.findOne({}, options);
+      const filter = { _id: new ObjectId(id) };
+      respQuote = await collection.findOne(filter);
     } catch (error) {
       console.log("quote By ID Error, ", error);
     } finally {

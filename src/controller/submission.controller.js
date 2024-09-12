@@ -43,7 +43,7 @@ class SubmissionController {
     }
   };
 
-  add = async (submission) => {
+  add = async (req, resp) => {
     try {
       const submission = await submissionServices.addOne(req.body);
       resp.status(200);

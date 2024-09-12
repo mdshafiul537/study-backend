@@ -8,13 +8,7 @@ class UserController {
       resp.status(200);
 
       if (!esIsEmpty(users)) {
-        resp.send(
-          respFormat(
-            users,
-            `${users?.length} users found`,
-            true
-          )
-        );
+        resp.send(respFormat(users, `${users?.length} users found`, true));
       } else {
         resp.status(202);
         resp.send(respFormat(null, ` users not found`, true));
@@ -42,15 +36,13 @@ class UserController {
     }
   };
 
-  add = async (user) => {
+  add = async (req, resp) => {
     try {
       const user = await userServices.addOne(req.body);
       resp.status(200);
 
       if (!esIsEmpty(user)) {
-        resp.send(
-          respFormat(user, "user Added  successfully", true)
-        );
+        resp.send(respFormat(user, "user Added  successfully", true));
       }
     } catch (error) {
       resp.send(respFormat(null, "users Update failed", false));
@@ -62,9 +54,7 @@ class UserController {
       resp.status(200);
 
       if (!esIsEmpty(user)) {
-        resp.send(
-          respFormat(user, "user Updated successfully", true)
-        );
+        resp.send(respFormat(user, "user Updated successfully", true));
       }
     } catch (error) {
       resp.send(respFormat(null, "users Update failed", false));

@@ -35,7 +35,7 @@ class QuoteController {
     }
   };
 
-  add = async (quote) => {
+  add = async (req, resp) => {
     try {
       const quote = await quoteServices.addOne(req.body);
       resp.status(200);
