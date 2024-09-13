@@ -78,15 +78,16 @@ class AssignmentController {
 
   deleteOne = async (req, resp) => {
     try {
-      const deleteResp = await assignmentServices.deleteOne(req?.params?.id);
+      const deleteResp = await assignmentServices.deleteOne(req?.params);
       resp.status(200);
 
       if (!esIsEmpty(deleteResp)) {
         resp.send(
-          respFormat(deleteResp, "assignment Delete/Remove  failed", true)
+          respFormat(deleteResp, "Assignment Delete/Remove successfully", true)
         );
       }
     } catch (error) {
+      console.log("Assignment Delete Error ", error);
       resp.send(respFormat(null, "assignment  Delete/Remove failed", false));
     }
   };

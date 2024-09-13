@@ -53,7 +53,6 @@ class AssignmentServices {
     try {
       const database = dbClient.db("study_db");
       const collection = database.collection("assignment");
-      console.log("Assignment Update, ", uAssignment);
       const { _id, ...assignment } = uAssignment;
 
       const filter = { _id: new ObjectId(_id) };
@@ -74,16 +73,18 @@ class AssignmentServices {
     }
   };
 
-  deleteOne = async (id, user) => {
+  deleteOne = async (params) => {
     let resp = null;
     try {
-      const database = dbConnectionClient.db("study_db");
+      const database = dbClient.db("study_db");
       const studyDb = database.collection("assignment");
+      const { id, user } = params;
 
-      const query = { $and: { _id: new ObjectId(id), userEmail: user } };
+      const query = { $and: [{ _id: new ObjectId(id) }, { userEmail: user }] };
+
       resp = await studyDb.deleteOne(query);
     } catch (error) {
-      console.log("Quote Delete Error ", error);
+      console.log("Assignment Delete Error ", error);
     } finally {
       return resp;
     }
