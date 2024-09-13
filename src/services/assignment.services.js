@@ -53,14 +53,20 @@ class AssignmentServices {
     try {
       const database = dbClient.db("study_db");
       const collection = database.collection("assignment");
+      console.log("Assignment Update, ", uAssignment);
+      const { _id, ...assignment } = uAssignment;
 
-      const filter = { _id: new ObjectId(uAssignment.id) };
+      const filter = { _id: new ObjectId(_id) };
 
       const updateDoc = {
-        $set: uAssignment,
+        $set: assignment,
       };
       // Update the first document that matches the filter
-      updateAc = await collection.updateOne(filter, updateDoc, options);
+      updateAc = await collection.updateOne(filter, updateDoc);
+
+      console.log("Assignment Update ", updateAc);
+    } catch (error) {
+      console.log("Assignment Update ", error);
     } finally {
       // Close the connection after the operation completes
 
