@@ -1,7 +1,39 @@
 const { ObjectId } = require("mongodb");
 const { dbClient } = require("../database/dbClient");
+const { esIsEmpty } = require("../utils/esHelper");
 
 class SubmissionServices {
+  getAllByUser = async (user) => {
+    let submissionResp = [];
+    try {
+      const database = dbClient.db("study_db");
+      const collection = database.collection("submission");
+      const filter = { $or: [{ userEmail: user }, { userName: user }] };
+
+      const cursor = collection.find(filter);
+      submissionResp = await cursor.toArray();
+    } finally {
+      return submissionResp;
+    }
+  };
+
+  getAllByStatus = async (type) => {
+    let submissionResp = [];
+    try {
+      const database = dbClient.db("study_db");
+      const collection = database.collection("submission");
+      const filter = { status: type };
+      if (!esIsEmpty(type)) {
+        const cursor = collection.find(filter);
+        submissionResp = await cursor.toArray();
+      } else {
+        const cursor = collection.find();
+        submissionResp = await cursor.toArray();
+      }
+    } finally {
+      return submissionResp;
+    }
+  };
   getAll = async () => {
     let submissionResp = [];
     try {
@@ -53,14 +85,19 @@ class SubmissionServices {
     try {
       const database = dbClient.db("study_db");
       const collection = database.collection("submission");
+      const { _id, ...submission } = uSubmission;
 
-      const filter = { _id: new ObjectId(uSubmission.id) };
+      submission.status = "Complete";
+
+      const filter = { _id: new ObjectId(_id) };
 
       const updateDoc = {
-        $set: uSubmission,
+        $set: submission,
       };
       // Update the first document that matches the filter
-      updateAc = await collection.updateOne(filter, updateDoc, options);
+      updateAc = await collection.updateOne(filter, updateDoc);
+    } catch (error) {
+      console.log("Update Submission Error, ", error);
     } finally {
       // Close the connection after the operation completes
 

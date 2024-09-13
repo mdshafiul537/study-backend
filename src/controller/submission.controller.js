@@ -27,6 +27,57 @@ class SubmissionController {
     }
   };
 
+  getAllByUser = async (req, resp) => {
+    try {
+      const submissions = await submissionServices.getAllByUser(
+        req?.params?.user
+      );
+      resp.status(200);
+
+      if (!esIsEmpty(submissions)) {
+        resp.send(
+          respFormat(
+            submissions,
+            `${submissions?.length} Submissions found`,
+            true
+          )
+        );
+      } else {
+        resp.status(202);
+        resp.send(respFormat(null, ` Submissions not found`, true));
+      }
+    } catch (error) {
+      resp.status(202);
+
+      resp.send(respFormat(null, ` Submissions not found`, true));
+    }
+  };
+  getAllType = async (req, resp) => {
+    try {
+      const submissions = await submissionServices.getAllByStatus(
+        req?.query?.type
+      );
+      resp.status(200);
+
+      if (!esIsEmpty(submissions)) {
+        resp.send(
+          respFormat(
+            submissions,
+            `${submissions?.length} Submissions found`,
+            true
+          )
+        );
+      } else {
+        resp.status(202);
+        resp.send(respFormat(null, ` Submissions not found`, true));
+      }
+    } catch (error) {
+      resp.status(202);
+
+      resp.send(respFormat(null, ` Submissions not found`, true));
+    }
+  };
+
   getOne = async (req, resp) => {
     const submission = await submissionServices.getOne(req?.params?.id);
     try {
