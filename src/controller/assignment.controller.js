@@ -28,7 +28,7 @@ class AssignmentController {
   };
 
   getOne = async (req, resp) => {
-    console.log("assignment Get One ...");
+    console.log("assignment Get One ...User, ", req.user);
 
     const assignment = await assignmentServices.getOne(req?.params?.id);
     try {
@@ -78,7 +78,10 @@ class AssignmentController {
 
   deleteOne = async (req, resp) => {
     try {
-      const deleteResp = await assignmentServices.deleteOne(req?.params);
+      const deleteResp = await assignmentServices.deleteOne({
+        id: req?.params.id,
+        user: req?.user?.userEmail,
+      });
       resp.status(200);
 
       if (!esIsEmpty(deleteResp)) {

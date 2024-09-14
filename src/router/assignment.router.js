@@ -1,6 +1,6 @@
 const express = require("express");
 const assignmentController = require("../controller/assignment.controller");
-const esMiddleware = require( "../middleware/middleware" );
+const esMiddleware = require("../middleware/middleware");
 
 const assignmentRouter = express.Router();
 
@@ -17,7 +17,7 @@ assignmentRouter.put(
   assignmentController.updateOne
 );
 assignmentRouter.delete(
-  "/:id/user/:user",
+  "/:id",
   esMiddleware.isAuthorize,
   assignmentController.deleteOne
 );

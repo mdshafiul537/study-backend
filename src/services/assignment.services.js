@@ -73,12 +73,11 @@ class AssignmentServices {
     }
   };
 
-  deleteOne = async (params) => {
+  deleteOne = async ({ id, user }) => {
     let resp = null;
     try {
       const database = dbClient.db("study_db");
       const studyDb = database.collection("assignment");
-      const { id, user } = params;
 
       const query = { $and: [{ _id: new ObjectId(id) }, { userEmail: user }] };
 
