@@ -2,7 +2,6 @@ const express = require("express");
 const cors = require("cors");
 const routers = require("./router");
 const cookieParser = require("cookie-parser");
-const essentialMiddleware = require("./middleware/middleware");
 class App {
   app = undefined;
   port = process.env.PORT | 3051;
@@ -28,15 +27,10 @@ class App {
         credentials: true,
       })
     );
-    this.app.use((req, resp, next) => {
-      resp.header("Access-Control-Allow-Origin", "*");
-      next();
-    });
 
     this.app.use(express.urlencoded({ extended: false }));
     this.app.use(express.json({ limit: "20mb" }));
     this.app.use(cookieParser());
-    this.app.use(essentialMiddleware.accessController);
   };
 
   run = () => {

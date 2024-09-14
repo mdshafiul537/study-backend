@@ -1,4 +1,5 @@
 const jwt = require("jsonwebtoken");
+const { esIsEmpty } = require("../utils/esHelper");
 
 class AuthenticationServices {
   createAuthToken = async (user) => {
@@ -9,7 +10,15 @@ class AuthenticationServices {
     }
   };
 
-  validateToken = async (token) => {};
+  validateToken = async (token) => {
+    try {
+      let isValid = false;
+    } catch (error) {
+      console.log("Validation Error, ", error);
+      isValid = false;
+    }
+    return isValid;
+  };
 }
 
 const authenticationServices = new AuthenticationServices();

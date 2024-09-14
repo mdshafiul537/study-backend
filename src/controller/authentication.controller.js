@@ -10,7 +10,7 @@ class AuthenticationController {
       if (!esIsEmpty(token)) {
         resp.cookie("token", token, {
           httpOnly: true,
-          secure: false,
+          secure: true,
           sameSite: "none",
         });
         resp.send(respFormat(null, "Token created successfully", true));
@@ -35,11 +35,9 @@ class AuthenticationController {
 
   logOut = async (req, resp) => {
     try {
-
       console.log("Log Out...");
-      resp.clearCookie("token", { maxAge: 0 });
+      resp.clearCookie("token");
       resp.send(respFormat(null, "Sign-out successfully", true));
-      
     } catch (error) {
       resp.send(respFormat(null, "Sign-out failed", false));
     }

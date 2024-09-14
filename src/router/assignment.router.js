@@ -1,12 +1,25 @@
 const express = require("express");
 const assignmentController = require("../controller/assignment.controller");
+const esMiddleware = require( "../middleware/middleware" );
 
 const assignmentRouter = express.Router();
 
 assignmentRouter.get("/", assignmentController.getAll);
-assignmentRouter.get("/:id", assignmentController.getOne);
-assignmentRouter.post("/", assignmentController.add);
-assignmentRouter.put("/", assignmentController.updateOne);
-assignmentRouter.delete("/:id/user/:user", assignmentController.deleteOne);
+assignmentRouter.get(
+  "/:id",
+  esMiddleware.isAuthorize,
+  assignmentController.getOne
+);
+assignmentRouter.post("/", esMiddleware.isAuthorize, assignmentController.add);
+assignmentRouter.put(
+  "/",
+  esMiddleware.isAuthorize,
+  assignmentController.updateOne
+);
+assignmentRouter.delete(
+  "/:id/user/:user",
+  esMiddleware.isAuthorize,
+  assignmentController.deleteOne
+);
 
 module.exports = assignmentRouter;
