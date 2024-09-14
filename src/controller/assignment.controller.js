@@ -69,7 +69,7 @@ class AssignmentController {
       resp.status(200);
 
       if (!esIsEmpty(assignment)) {
-        resp.send(respFormat(assignment, "assignment Update  failed", true));
+        resp.send(respFormat(assignment, "Assignment Updated :)", true));
       }
     } catch (error) {
       resp.send(respFormat(null, "assignments Update failed", false));
