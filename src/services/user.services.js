@@ -37,12 +37,12 @@ class UserServices {
     let userResult = null;
 
     try {
-      const collection = dbClient.db("art_craft").collection("user");
+      const collection = dbClient.db("study_db").collection("user");
 
       user.create = new Date();
       userResult = await collection.insertOne(user);
     } catch (error) {
-      // console.log("User AddOne Error, ", error);
+      console.log("User AddOne Error, ", error);
     } finally {
       return userResult;
     }

@@ -27,6 +27,30 @@ class AssignmentController {
     }
   };
 
+  getAllByDifficulty = async (req, resp) => {
+    try {
+      const assignments = await assignmentServices.getAllDifficulty(req.query?.level);
+      resp.status(200);
+
+      if (!esIsEmpty(assignments)) {
+        resp.send(
+          respFormat(
+            assignments,
+            `${assignments?.length} assignments found By Query`,
+            true
+          )
+        );
+      } else {
+        resp.status(202);
+        resp.send(respFormat(null, ` assignments not found By Query`, true));
+      }
+    } catch (error) {
+      resp.status(202);
+
+      resp.send(respFormat(null, ` assignments not found`, true));
+    }
+  };
+
   getOne = async (req, resp) => {
     console.log("assignment Get One ...User, ", req.user);
 

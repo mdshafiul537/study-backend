@@ -1,5 +1,6 @@
 const { ObjectId } = require("mongodb");
 const { dbClient } = require("../database/dbClient");
+const { esIsEmpty } = require("../utils/esHelper");
 
 class AssignmentServices {
   getAll = async () => {
@@ -10,6 +11,25 @@ class AssignmentServices {
 
       const cursor = collection.find();
       assignmentsResp = await cursor.toArray();
+    } finally {
+      return assignmentsResp;
+    }
+  };
+
+  getAllDifficulty = async (level) => {
+    let assignmentsResp = [];
+    try {
+      const database = dbClient.db("study_db");
+      const collection = database.collection("assignment");
+
+      if (!esIsEmpty(level)) {
+        const filter = { difficulty: level };
+        const cursor = collection.find(filter);
+        assignmentsResp = await cursor.toArray();
+      } else {
+        const cursor = collection.find();
+        assignmentsResp = await cursor.toArray();
+      }
     } finally {
       return assignmentsResp;
     }
