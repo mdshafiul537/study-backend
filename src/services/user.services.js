@@ -5,7 +5,7 @@ class UserServices {
   getAll = async () => {
     let usersResp = [];
     try {
-      const database = dbClient.db("art_craft");
+      const database = dbClient.db("study_db");
       const collection = database.collection("user");
 
       const cursor = collection.find();
@@ -20,7 +20,7 @@ class UserServices {
     let respUser = null;
     try {
       // Get the database and collection on which to run the operation
-      const database = dbClient.db("art_craft");
+      const database = dbClient.db("study_db");
       const collection = database.collection("user");
 
       const filter = { _id: new ObjectId(uSubmission.id) };
@@ -50,7 +50,7 @@ class UserServices {
 
   userUpdate = async (uUser) => {
     try {
-      const database = dbClient.db("art_craft");
+      const database = dbClient.db("study_db");
       const collection = database.collection("user");
 
       const filter = { _id: new ObjectId(uUser.id) };

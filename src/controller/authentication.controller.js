@@ -35,7 +35,6 @@ class AuthenticationController {
 
   logOut = async (req, resp) => {
     try {
-      console.log("Log Out...");
       resp.clearCookie("token");
       resp.send(respFormat(null, "Sign-out successfully", true));
     } catch (error) {

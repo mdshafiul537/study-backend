@@ -52,7 +52,7 @@ class AssignmentController {
   };
 
   getOne = async (req, resp) => {
-    console.log("assignment Get One ...User, ", req.user);
+    // console.log("assignment Get One ...User, ", req.user);
 
     const assignment = await assignmentServices.getOne(req?.params?.id);
     try {
@@ -75,7 +75,6 @@ class AssignmentController {
     try {
       const assignment = await assignmentServices.addOne(req.body);
       resp.status(200);
-      console.log("CN Adding assignment Resp, ", assignment);
       if (!esIsEmpty(assignment)) {
         resp.send(
           respFormat(assignment, "Assignment added  successfully", true)

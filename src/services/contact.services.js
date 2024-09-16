@@ -1,73 +1,71 @@
 const { ObjectId } = require("mongodb");
 const { dbClient } = require("../database/dbClient");
 
-class QuoteServices {
+class ContactServices {
   getAll = async () => {
-    let quotesResp = [];
+    let contactResp = [];
     try {
       const database = dbClient.db("study_db");
-      const collection = database.collection("quote");
+      const collection = database.collection("contact");
 
       const cursor = collection.find();
 
-      quotesResp = await cursor.toArray();
+      contactResp = await cursor.toArray();
     } catch (error) {
-      console.log("Get All quote Error ", error);
+      console.log("Get All Contact Error ", error);
     } finally {
-      return quotesResp;
+      return contactsResp;
     }
   };
 
   getOne = async (id) => {
-    // console.log("quote Finding using id ", id);
-    let respQuote = null;
+    // console.log("contact Finding using id ", id);
+    let respContact = null;
     try {
       // Get the database and collection on which to run the operation
       const database = dbClient.db("study_db");
-      const collection = database.collection("quote");
+      const collection = database.collection("contact");
 
       const filter = { _id: new ObjectId(id) };
-      respQuote = await collection.findOne(filter);
+      respContact = await collection.findOne(filter);
     } catch (error) {
-      console.log("quote By ID Error, ", error);
+      console.log("contact By ID Error, ", error);
     } finally {
-      return respQuote;
+      return respContact;
     }
   };
 
-  addOne = async (quote) => {
-    let quoteResult = null;
-
+  addOne = async (contact) => {
+    let contactResult = null;
     try {
-      const collection = dbClient.db("study_db").collection("quote");
+      const collection = dbClient.db("study_db").collection("contact");
 
-      quote.create = new Date();
-      quoteResult = await collection.insertOne(quote);
+      contact.create = new Date();
+      contactResult = await collection.insertOne(contact);
     } catch (error) {
-      console.log("quote AddOne Error, ", error);
+      console.log("contact AddOne Error, ", error);
     } finally {
-      return quoteResult;
+      return contactResult;
     }
   };
 
-  quoteUpdate = async (uQuote) => {
+  contactUpdate = async (uContact) => {
     let update = null;
     try {
       const database = dbClient.db("study_db");
-      const collection = database.collection("quote");
-
-      const { _id, quote } = uQuote;
+      const collection = database.collection("contact");
+      const { _id, ...contact } = uContact;
       const filter = { _id: new ObjectId(_id) };
 
       const options = { upsert: true };
 
       const updateDoc = {
-        $set: quote,
+        $set: contact,
       };
       // Update the first document that matches the filter
       update = await collection.updateOne(filter, updateDoc, options);
     } catch (error) {
-      console.log("Quote update failed ", error);
+      console.log("contact update failed ", error);
     } finally {
       return update;
     }
@@ -77,18 +75,18 @@ class QuoteServices {
     let resp = null;
     try {
       const database = dbConnectionClient.db("study_db");
-      const studyDb = database.collection("quote");
+      const studyDb = database.collection("contact");
 
       const query = { _id: new ObjectId(id) };
       resp = await studyDb.deleteOne(query);
     } catch (error) {
-      console.log("Quote Delete Error ", error);
+      console.log("contact Delete Error ", error);
     } finally {
       return resp;
     }
   };
 }
 
-const quoteServices = new QuoteServices();
+const contactServices = new ContactServices();
 
-module.exports = quoteServices;
+module.exports = contactServices;

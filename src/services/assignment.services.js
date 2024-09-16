@@ -36,7 +36,6 @@ class AssignmentServices {
   };
 
   getOne = async (id) => {
-    console.log("assignment Finding using id ", id);
     let respAssignment = null;
     try {
       // Get the database and collection on which to run the operation
@@ -83,7 +82,6 @@ class AssignmentServices {
       // Update the first document that matches the filter
       updateAc = await collection.updateOne(filter, updateDoc);
 
-      console.log("Assignment Update ", updateAc);
     } catch (error) {
       console.log("Assignment Update ", error);
     } finally {

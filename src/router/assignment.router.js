@@ -5,6 +5,7 @@ const esMiddleware = require("../middleware/middleware");
 const assignmentRouter = express.Router();
 
 assignmentRouter.get("/", assignmentController.getAll);
+assignmentRouter.get("/difficulty", assignmentController.getAllByDifficulty);
 assignmentRouter.get(
   "/:id",
   esMiddleware.isAuthorize,

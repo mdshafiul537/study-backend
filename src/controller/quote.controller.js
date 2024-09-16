@@ -1,3 +1,4 @@
+const quoteServices = require( "../services/quote.services" );
 const respFormat = require("../utils/response/respFormat");
 
 class QuoteController {
