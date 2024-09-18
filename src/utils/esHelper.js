@@ -7,11 +7,11 @@ const isNumber = require("is-number");
  * @description this value is Empty Check
  */
 const esIsEmpty = (obj) => {
-  if ((obj === undefined && obj === null) || obj === `null`) {
+  if (obj === undefined && obj === null) {
     return true;
   }
 
-  if (typeof obj === "undefined" || obj == `null`) {
+  if (typeof obj === "undefined" || typeof obj == null) {
     return true;
   }
 
@@ -20,7 +20,7 @@ const esIsEmpty = (obj) => {
     obj === undefined ||
     typeof obj === "undefined" ||
     obj === "" ||
-    obj == `null`
+    typeof obj == null
   ) {
     return true;
   }
@@ -40,6 +40,7 @@ const esIsEmpty = (obj) => {
   if (obj) {
     return false;
   }
+
   return true;
 };
 

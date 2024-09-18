@@ -17,14 +17,34 @@ class App {
 
   initMiddleware = () => {
     // this.app.use(cors({ origin: "*" }));
+
+    // this.app.use(
+    //   cors({
+    //     origin: [
+    //       "http://localhost:5173",
+    //       "https://united-study-3b5ea.web.app",
+    //       "https://united-study-3b5ea.firebaseapp.com",
+    //     ],
+    //     credentials: true,
+    //   })
+    // );
+
+    const allowedOrigins = new Set([
+      "https://united-study-3b5ea.web.app",
+      "https://united-study-3b5ea.firebaseapp.com",
+      "http://localhost:5173",
+    ]);
     this.app.use(
       cors({
-        origin: [
-          "http://localhost:5173",
-          "https://united-study-3b5ea.web.app",
-          "https://united-study-3b5ea.firebaseapp.com",
-        ],
+        origin: (origin, callback) => {
+          if (allowedOrigins.has(origin ?? "") || !origin) {
+            callback(null, true);
+          } else {
+            callback(new Error("Not allowed by CORS"));
+          }
+        },
         credentials: true,
+        optionsSuccessStatus: 200,
       })
     );
 

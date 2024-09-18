@@ -72,6 +72,7 @@ class AssignmentServices {
     try {
       const database = dbClient.db("study_db");
       const collection = database.collection("assignment");
+
       const { _id, ...assignment } = uAssignment;
 
       const filter = { _id: new ObjectId(_id) };
@@ -81,7 +82,6 @@ class AssignmentServices {
       };
       // Update the first document that matches the filter
       updateAc = await collection.updateOne(filter, updateDoc);
-
     } catch (error) {
       console.log("Assignment Update ", error);
     } finally {

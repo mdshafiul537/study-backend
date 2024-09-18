@@ -29,7 +29,9 @@ class AssignmentController {
 
   getAllByDifficulty = async (req, resp) => {
     try {
-      const assignments = await assignmentServices.getAllDifficulty(req.query?.level);
+      const assignments = await assignmentServices.getAllDifficulty(
+        req.query?.level
+      );
       resp.status(200);
 
       if (!esIsEmpty(assignments)) {
@@ -55,19 +57,20 @@ class AssignmentController {
     // console.log("assignment Get One ...User, ", req.user);
 
     const assignment = await assignmentServices.getOne(req?.params?.id);
-    try {
-      resp.status(200);
 
+    try {
       if (!esIsEmpty(assignment)) {
-        resp.send(respFormat(assignment, "assignment found by ID", true));
+        resp
+          .status(200)
+          .send(respFormat(assignment, "assignment found by ID", true));
       } else {
-        resp.send(respFormat(assignment, "assignment not found", false));
+        resp
+
+          .status(200)
+          .send(respFormat(assignment, "assignment not found", false));
       }
     } catch (error) {
-      console.log("Get assignments, Error ", error);
-      resp.status(202);
-
-      resp.send(respFormat(null, "assignments not found", false));
+      resp.status(202).send(respFormat(null, "assignments not found", false));
     }
   };
 

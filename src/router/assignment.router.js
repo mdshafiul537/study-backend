@@ -12,6 +12,12 @@ assignmentRouter.get(
   assignmentController.getOne
 );
 assignmentRouter.post("/", esMiddleware.isAuthorize, assignmentController.add);
+assignmentRouter.post(
+  "/update",
+  esMiddleware.isAuthorize,
+  assignmentController.updateOne
+);
+
 assignmentRouter.put(
   "/",
   esMiddleware.isAuthorize,
